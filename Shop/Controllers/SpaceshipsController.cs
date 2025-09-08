@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Shop.Data;
 using Shop.Models.Spaceships;
 
@@ -30,6 +31,13 @@ namespace Shop.Controllers
                 
 
             return View(result);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            SpaceshipCreateViewModel result = new();
+
+            return View("Create", result);
         }
     }
 }
