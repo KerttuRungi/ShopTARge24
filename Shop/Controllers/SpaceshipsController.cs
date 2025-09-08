@@ -21,13 +21,15 @@ namespace Shop.Controllers
             var result = _context.Spaceships
                 .Select(x => new SpaceshipIndexViewModel
                 {
-                    Id =x.Id,
+                    Id = x.Id,
                     Name = x.Name,
                     Classification = x.Classification,
                     BuildDate = x.BuildDate,
+                    Crew = x.Crew,
                 });
+                
 
-            return View();
+            return View(result);
         }
     }
 }
