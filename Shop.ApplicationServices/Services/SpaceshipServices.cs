@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
@@ -42,6 +43,25 @@ namespace Shop.ApplicationServices.Services
 
         }
 
+        public async Task<Spaceships> DetailAsync(Guid id)
+        {
+            var result = await _context.Spaceships
+                .FirstOrDefaultAsync(x => x.Id == id);
 
+            return result;
+        }
+
+        public async Task<Spaceships> Delete(Guid id)
+        {
+            var result = await _context.Spaceships
+                 .FirstOrDefaultAsync(x => x.Id == id);
+            _context.Spaceships.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result;
+            //leida üles konkreetne soovitud rida, mida soovite kutsuda
+
+            //kui rida on leitud, siis eemaldage andmebaasist
+        }
     }
 }
