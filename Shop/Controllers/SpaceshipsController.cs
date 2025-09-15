@@ -41,12 +41,12 @@ namespace Shop.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            SpaceshipCreateViewModel result = new();
+            SpaceshipCreateUpdateViewModel result = new();
 
             return View("Create", result);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(SpaceshipCreateViewModel vm)
+        public async Task<IActionResult> Create(SpaceshipCreateUpdateViewModel vm)
         {
             var dto = new SpaceshipDto()
             {
@@ -68,6 +68,29 @@ namespace Shop.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var spaceship = await _spaceshipServices.DetailAsync(id);
+
+            if (spaceship == null)
+            {
+                return NotFound();
+            }
+            var vm = new SpaceshipCreateUpdateViewModel();
+
+            vm.Id = spaceship.Id;
+            vm.Name = spaceship.Name;
+            vm.Classification = spaceship.Classification;
+            vm.BuildDate = spaceship.BuildDate;
+            vm.Crew = spaceship.Crew;
+            vm.EnginePower = spaceship.EnginePower;
+            vm.CreatedAt = spaceship.CreatedAt;
+            vm.ModifiedAt = spaceship.ModifiedAt;
+
+            return View("CreateUpdate", vm);
         }
 
         [HttpGet]
@@ -106,5 +129,8 @@ namespace Shop.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+       
+
     }
 }

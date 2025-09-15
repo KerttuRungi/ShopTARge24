@@ -42,6 +42,28 @@ namespace Shop.ApplicationServices.Services
             return spaceships;
 
         }
+        public async Task<Spaceships> Update(SpaceshipDto dto)
+        {
+
+            Spaceships spaceships = new Spaceships();
+
+            spaceships.Id = dto.Id;
+            spaceships.Name = dto.Name;
+            spaceships.Classification = dto.Classification;
+            spaceships.BuildDate = dto.BuildDate;
+            spaceships.Crew = dto.Crew;
+            spaceships.EnginePower = dto.EnginePower;
+            spaceships.CreatedAt = dto.CreatedAt;
+            spaceships.ModifiedAt = DateTime.Now;
+
+            _context.Spaceships.Update(spaceships);
+            await _context.SaveChangesAsync();
+
+            return spaceships;
+
+
+
+        }
 
         public async Task<Spaceships> DetailAsync(Guid id)
         {
@@ -59,9 +81,7 @@ namespace Shop.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return result;
-            //leida üles konkreetne soovitud rida, mida soovite kutsuda
-
-            //kui rida on leitud, siis eemaldage andmebaasist
+            
         }
     }
 }
