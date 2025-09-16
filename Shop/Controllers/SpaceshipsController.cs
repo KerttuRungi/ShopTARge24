@@ -4,6 +4,7 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 using Shop.Models.Spaceships;
+using Shop.Core.Domain;
 
 namespace Shop.Controllers
 {
@@ -43,7 +44,7 @@ namespace Shop.Controllers
         {
             SpaceshipCreateUpdateViewModel result = new();
 
-            return View("Create", result);
+            return View("CreateUpdate", result);
         }
         [HttpPost]
         public async Task<IActionResult> Create(SpaceshipCreateUpdateViewModel vm)
@@ -70,7 +71,7 @@ namespace Shop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
             var spaceship = await _spaceshipServices.DetailAsync(id);
@@ -91,6 +92,30 @@ namespace Shop.Controllers
             vm.ModifiedAt = spaceship.ModifiedAt;
 
             return View("CreateUpdate", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(SpaceshipCreateUpdateViewModel vm)
+        {
+            var dto = new SpaceshipDto()
+            {
+                Id = vm.Id,
+                Name = vm.Name,
+                Classification = vm.Classification,
+                BuildDate = vm.BuildDate,
+                Crew = vm.Crew,
+                EnginePower = vm.EnginePower,
+                CreatedAt = vm.CreatedAt,
+                ModifiedAt = vm.ModifiedAt
+            };
+
+            var result = await _spaceshipServices.Update(dto);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
