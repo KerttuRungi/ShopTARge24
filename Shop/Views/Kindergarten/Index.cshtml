@@ -15,23 +15,26 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
+				<th scope="col"></th>
 				<th scope="col">Group name</th>
 				<th scope="col">Amount of children</th>
 				<th scope="col">Kindergarten name</th>
 				<th scope="col">Teacher name</th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach (var kindergarten in Model)
 			{
 				<tr>
-					<th scope="row">@rowNumber</th>
+					<td>@rowNumber</td>
 					<td>@kindergarten.GroupName</td>
 					<td>@kindergarten.ChidlrenCount</td>
 					<td>@kindergarten.KindergartenName</td>
 					<td>@kindergarten.TeacherName</td>
+					
 					<td>
-						<a asp-action="edit" asp-controller="Kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-primary">Edit</a>
+						<a asp-action="update" asp-controller="Kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-primary">Update</a>
 						<a asp-action="details" asp-controller="Kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-primary">Details</a>
 						<a asp-action="delete" asp-controller="Kindergarten" asp-route-id="@kindergarten.Id" class="btn btn-primary">Delete</a>
 					</td>

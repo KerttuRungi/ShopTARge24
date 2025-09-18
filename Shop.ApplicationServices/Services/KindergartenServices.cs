@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Shop.Core.Domain;
+using Shop.Core.Dto;
+using Shop.Core.ServiceInterface;
+using Shop.Data;
+
+namespace Shop.ApplicationServices.Services
+{
+    public class KindergartenServices : IKindergartenServices
+    {
+        private readonly ShopContext _context;
+
+        //makeing constructor
+        public KindergartenServices
+            (
+                ShopContext context
+            )
+        {
+            _context = context;
+        }
+        public async Task<Kindergarten> Create(KindergartenDto dto)
+        {
+            Kindergarten kindergarten = new Kindergarten();
+            kindergarten.Id = Guid.NewGuid();
+            kindergarten.GroupName = dto.GroupName;
+            kindergarten.ChidlrenCount = dto.ChidlrenCount;
+            kindergarten.KindergartenName = dto.KindergartenName;
+            kindergarten.TeacherName = dto.TeacherName;
+            kindergarten.CreatedAt = DateTime.Now;
+            kindergarten.UpdatedAt = DateTime.Now;
+
+
+            await _context.Kindergarten.AddAsync(kindergarten);
+            await _context.SaveChangesAsync();
+
+            return kindergarten;
+
+        }
+
+
+    }
+}
