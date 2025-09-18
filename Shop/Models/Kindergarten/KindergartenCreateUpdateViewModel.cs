@@ -2,7 +2,7 @@
 {
     public class KindergartenCreateUpdateViewModel
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public string GroupName { get; set; }
         public int ChidlrenCount { get; set; }
         public string KindergartenName { get; set; }

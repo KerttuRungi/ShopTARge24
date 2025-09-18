@@ -5,6 +5,7 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.ApplicationServices.Services;
 using Shop.Models.Spaceships;
+using Shop.Core.Domain;
 
 
 namespace Shop.Controllers
@@ -72,7 +73,51 @@ namespace Shop.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var kindergarten = await _kindergartenServices.DetailAsync(id);
+
+            if (kindergarten == null)
+            {
+                return NotFound();
+            }
+            var vm = new KindergartenCreateUpdateViewModel();
+
+            vm.Id = kindergarten.Id;
+            vm.GroupName = kindergarten.GroupName;
+            vm.ChidlrenCount = kindergarten.ChidlrenCount;
+            vm.KindergartenName = kindergarten.KindergartenName;
+            vm.TeacherName = kindergarten.TeacherName;
+            vm.CreatedAt = kindergarten.CreatedAt;
+            vm.UpdatedAt = kindergarten.UpdatedAt;
+
+            return View("CreateUpdate", vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(KindergartenCreateUpdateViewModel vm)
+        {
+            var dto = new KindergartenDto()
+            {
+                Id = (Guid)vm.Id,
+                GroupName = vm.GroupName,
+                ChidlrenCount = vm.ChidlrenCount,
+                KindergartenName = vm.KindergartenName,
+                TeacherName = vm.TeacherName,
+            };
+
+            var result = await _kindergartenServices.Update(dto); // Fix: Declare 'result' variable here  
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
 

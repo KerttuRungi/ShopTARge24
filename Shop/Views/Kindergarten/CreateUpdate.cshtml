@@ -1,6 +1,13 @@
 ﻿@model Shop.Models.Kindergarten.KindergartenCreateUpdateViewModel
 
-<h1>Create</h1>
+@if (Model.Id.HasValue)
+{
+    <h1>Update</h1>
+}
+else
+{
+    <h1>Create</h1>
+}
 
 <div>
     <form method="post" enctype="multipart/form-data">
@@ -50,6 +57,15 @@
             </div>
         </div>
 
-        <input asp-action="create" asp-controller="kindergarten" type="submit" class="btn btn-primary" value="Create" />
+        @if (Model.Id.HasValue)
+        {
+            <input asp-action="update" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Update" />
+        }
+        else
+        {
+            <input asp-action="create" asp-controller="Kindergarten" type="submit" class="btn btn-primary" value="Create" />
+        }
+
+        <a asp-action="Index" asp-controller="Kindergarten" class="btn btn-success">Back</a>
     </form>
 </div>
