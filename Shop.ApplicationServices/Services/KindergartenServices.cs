@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
@@ -40,7 +41,23 @@ namespace Shop.ApplicationServices.Services
             return kindergarten;
 
         }
+        public async Task<Kindergarten> DetailAsync(Guid id)
+        {
+            var result = await _context.Kindergarten
+                .FirstOrDefaultAsync(x => x.Id == id);
 
+            return result;
+        }
 
+        public async Task<Kindergarten> Delete(Guid id)
+        {
+            var result = await _context.Kindergarten
+                 .FirstOrDefaultAsync(x => x.Id == id);
+            _context.Kindergarten.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result;
+           
+        }
     }
 }

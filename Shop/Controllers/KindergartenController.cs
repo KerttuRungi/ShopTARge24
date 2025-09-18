@@ -4,6 +4,7 @@ using Shop.Models.Kindergarten;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.ApplicationServices.Services;
+using Shop.Models.Spaceships;
 
 
 namespace Shop.Controllers
@@ -39,6 +40,7 @@ namespace Shop.Controllers
 
             return View(result);
         }
+        
         [HttpGet]
         public IActionResult Create()
         {
@@ -47,6 +49,7 @@ namespace Shop.Controllers
             return View("CreateUpdate", result);
             
         }
+        
         [HttpPost]
         public async Task<IActionResult> Create(KindergartenCreateUpdateViewModel vm)
         {
@@ -66,6 +69,41 @@ namespace Shop.Controllers
             }
 
 
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+
+        {
+            var kindergarten = await _kindergartenServices.DetailAsync(id);
+
+            if (kindergarten == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new KindergartenDeleteViewModel();
+
+            vm.Id = kindergarten.Id;
+            vm.GroupName = kindergarten.GroupName;
+            vm.ChidlrenCount = kindergarten.ChidlrenCount;
+            vm.TeacherName = kindergarten.TeacherName;
+            vm.CreatedAt = kindergarten.CreatedAt;
+            vm.UpdatedAt = kindergarten.UpdatedAt;
+
+            return View(vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var result = await _kindergartenServices.Delete(id);
+
+            if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
             return RedirectToAction(nameof(Index));
         }
