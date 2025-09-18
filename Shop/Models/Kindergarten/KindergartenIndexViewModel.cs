@@ -1,6 +1,6 @@
 ﻿namespace Shop.Models.Kindergarten
 {
-    public class Kindergarten
+    public class KindergartenIndexViewModel
     {
         public Guid Id { get; set; }
         public string GroupName { get; set; }
