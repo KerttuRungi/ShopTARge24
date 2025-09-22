@@ -1,4 +1,6 @@
-﻿namespace Shop.Models.Spaceships
+﻿using Shop.Core.Dto;
+
+namespace Shop.Models.Spaceships
 {
     public class SpaceshipCreateUpdateViewModel
     {
@@ -9,8 +11,12 @@
         public DateTime? BuildDate { get; set; }
         public int? Crew { get; set; }
         public int? EnginePower { get; set; }
+        public List<IFormFile>? Files { get; set; }
+        public List<ImageViewModel> Image { get; set; }
+            = new List<ImageViewModel>();
 
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
+        public IEnumerable<FileToApiDto> FileToApi { get; internal set; }
     }
 }

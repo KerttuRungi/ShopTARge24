@@ -14,11 +14,13 @@ namespace Shop.ApplicationServices.Services
     public class SpaceshipServices: ISpaceshipServices
     {
         private readonly ShopContext _context;
+        private readonly IFileServices _fileServices;
 
         //makeing constructor
         public SpaceshipServices
             (
-                ShopContext context
+                ShopContext context,
+                IFileServices fileServices
             )
         {
             _context = context;
@@ -35,6 +37,7 @@ namespace Shop.ApplicationServices.Services
             spaceships.EnginePower = dto.EnginePower;
             spaceships.CreatedAt = DateTime.Now;
             spaceships.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceships);
 
             await _context.Spaceships.AddAsync(spaceships);
             await _context.SaveChangesAsync();
