@@ -50,18 +50,20 @@ namespace Shop.ApplicationServices.Services
 
         public async Task<Kindergarten> Update(KindergartenDto dto)
         {
-            Shop.Core.Domain.Kindergarten kindergarten = new Shop.Core.Domain.Kindergarten(); // Fully qualify the type
+            // Fetch the existing entity from the database
+            var kindergarten = await _context.Kindergarten.FirstOrDefaultAsync(x => x.Id == dto.Id);
+            if (kindergarten == null) return null;
 
-            kindergarten.Id = dto.Id;
+            // Update only the editable fields
             kindergarten.GroupName = dto.GroupName;
             kindergarten.ChidlrenCount = dto.ChidlrenCount;
             kindergarten.KindergartenName = dto.KindergartenName;
             kindergarten.TeacherName = dto.TeacherName;
-            kindergarten.CreatedAt = dto.CreatedAt;
-            kindergarten.UpdatedAt = DateTime.Now;
-            _context.Kindergarten.Update(kindergarten); 
-            await _context.SaveChangesAsync();
 
+            // Do NOT modify CreatedAt
+            kindergarten.UpdatedAt = DateTime.UtcNow; // update UpdatedAt
+
+            await _context.SaveChangesAsync();
             return kindergarten;
         }
 
