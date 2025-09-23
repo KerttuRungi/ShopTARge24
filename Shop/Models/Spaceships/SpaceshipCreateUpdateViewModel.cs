@@ -17,6 +17,6 @@ namespace Shop.Models.Spaceships
 
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
-        public IEnumerable<FileToApiDto> FileToApi { get; internal set; }
+        
     }
 }

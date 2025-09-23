@@ -24,6 +24,7 @@ namespace Shop.ApplicationServices.Services
             )
         {
             _context = context;
+            _fileServices = fileServices;
         }
         public async Task<Spaceships> Create(SpaceshipDto dto)
         {
@@ -58,6 +59,7 @@ namespace Shop.ApplicationServices.Services
             spaceships.EnginePower = dto.EnginePower;
             spaceships.CreatedAt = dto.CreatedAt;
             spaceships.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceships);
 
             _context.Spaceships.Update(spaceships);
             await _context.SaveChangesAsync();
