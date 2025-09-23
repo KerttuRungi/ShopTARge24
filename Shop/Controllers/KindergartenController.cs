@@ -169,6 +169,7 @@ namespace Shop.Controllers
             vm.GroupName = kindergarten.GroupName;
             vm.ChidlrenCount = kindergarten.ChidlrenCount;
             vm.TeacherName = kindergarten.TeacherName;
+            vm.KindergartenName = kindergarten.KindergartenName;
             vm.CreatedAt = kindergarten.CreatedAt;
             vm.UpdatedAt = kindergarten.UpdatedAt;
 
