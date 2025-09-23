@@ -8,6 +8,7 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Microsoft.Extensions.Hosting;
 using Shop.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shop.ApplicationServices.Services
 {
@@ -54,8 +55,28 @@ namespace Shop.ApplicationServices.Services
                             _context.FileToApis.Add(path);
                         }
                     }
+                }
             }
         }
+        public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
+        {
+            //kui soovin kustutada, siis pean l'bi Id pildi ülesse otsima
+            var imageId = await _context.FileToApis
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+            //kus asuvad pildid, mida hakatakse kustutama
+            var filePath = _webHost.ContentRootPath + "\\multibleFileUpload\\"
+                + imageId.ExistingFilePath;
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            _context.FileToApis.Remove(imageId);
+            await _context.SaveChangesAsync();
+
+            return null;
+        }
     }
-}
 }
