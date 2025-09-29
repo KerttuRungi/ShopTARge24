@@ -35,15 +35,7 @@ app.UseAuthorization();
 
 var provider = new FileExtensionContentTypeProvider();
 app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(builder.Environment.ContentRootPath, "multibleFileUpload")),
-    RequestPath = "/multibleFileUpload",
-    ContentTypeProvider = provider
 
-
-});
 
 app.MapControllerRoute(
     name: "default",

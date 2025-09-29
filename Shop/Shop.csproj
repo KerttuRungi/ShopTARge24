@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\multibleFileUpload\08e5f4f2-3dfd-4ed7-b68f-4ff99aeb13da_spaceship2.jpg" />
+    <None Include="wwwroot\multibleFileUpload\31a51df9-1415-4fb9-93e7-d392e7989867_spaceship 1.jpg" />
+    <None Include="wwwroot\multibleFileUpload\3f179b34-97f2-44b9-8def-d340ce0035cd_Spaceship-PNG-Pic.png" />
+    <None Include="wwwroot\multibleFileUpload\4b07af30-71eb-4cb1-ac45-512ad1f2401e_spaceship2.jpg" />
+    <None Include="wwwroot\multibleFileUpload\9fe674e7-71c0-449d-b897-9e802059b92a_spaceship2.jpg" />
+    <None Include="wwwroot\multibleFileUpload\c174485f-7daa-48dd-b43c-6ba616b41c86_spaceship1.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.8">
       <PrivateAssets>all</PrivateAssets>

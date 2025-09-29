@@ -30,14 +30,14 @@ namespace Shop.ApplicationServices.Services
         {
             if (dto.Files != null && dto.Files.Count > 0)
             {
-                if (!Directory.Exists(_webHost.ContentRootPath + "\\multibleFileUpload\\"))
+                if (!Directory.Exists(_webHost.ContentRootPath + "wwwroot\\multibleFileUpload\\"))
                 {
-                    Directory.CreateDirectory(_webHost.ContentRootPath +"\\multibleFileUpload\\");
+                    Directory.CreateDirectory(_webHost.ContentRootPath +"wwwroot\\multibleFileUpload\\");
                 }
 
                 foreach (var file in dto.Files) {
                     {
-                        string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "multibleFileUpload");
+                        string uploadsFolder = Path.Combine(_webHost.ContentRootPath,"wwwroot", "multibleFileUpload");
                         string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
                         string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
@@ -65,7 +65,7 @@ namespace Shop.ApplicationServices.Services
                 .FirstOrDefaultAsync(x => x.Id == dto.Id);
 
             //kus asuvad pildid, mida hakatakse kustutama
-            var filePath = _webHost.ContentRootPath + "\\multibleFileUpload\\"
+            var filePath = _webHost.ContentRootPath + "wwwroot\\multibleFileUpload\\"
                 + imageId.ExistingFilePath;
 
             if (File.Exists(filePath))
