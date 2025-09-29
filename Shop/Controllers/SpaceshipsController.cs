@@ -6,6 +6,7 @@ using Shop.Data;
 using Shop.Models.Spaceships;
 using Shop.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using Shop.ApplicationServices.Services;
 
 namespace Shop.Controllers
 {
@@ -13,15 +14,17 @@ namespace Shop.Controllers
     {
         private readonly ShopContext _context;
         private readonly ISpaceshipServices _spaceshipServices;
-
+        private readonly IFileServices _fileServices;
         public SpaceshipsController
             (
                 ShopContext context,
-                ISpaceshipServices spaceshipServices
+                ISpaceshipServices spaceshipServices,
+                IFileServices fileServices
             )
         {
             _context = context;
             _spaceshipServices = spaceshipServices;
+            _fileServices = fileServices;
 
         }
 
@@ -223,6 +226,20 @@ namespace Shop.Controllers
 
             return View(vm);
         }
+        public async Task<IActionResult> RemoveImage(ImageViewModel vm)
+        {
+            var dto = new FileToApiDto()
+            {
+                Id = vm.ImageId,
+            };
 
+            var images = await _fileServices.RemoveImageFromApi(dto);
+
+            if (images == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
