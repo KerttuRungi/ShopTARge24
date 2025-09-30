@@ -63,6 +63,16 @@ namespace Shop.ApplicationServices.Services
 
             return result;
         }
+        public async Task<RealEstate> Delete(Guid id)
+        {
+            var result = await _context.RealEstate
+                 .FirstOrDefaultAsync(x => x.Id == id);
+            _context.RealEstate.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result;
+
+        }
 
 
     }
