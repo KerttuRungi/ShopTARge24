@@ -1,1 +1,51 @@
-﻿Test
+﻿@using Shop.Core.Domain
+@using Shop.Data.Migrations
+@model IEnumerable<Shop.Models.RealEstate.RealEstateIndexViewModel>
+
+@{
+	int rowNumber = 1;
+}
+
+<div>
+	<a asp-action="create" asp-controller="RealEstate" type="submit" class="btn btn-primary">Create</a>
+</div>
+
+<div class="h1">
+	Real Estate
+</div>
+<form method="post">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">Area</th>
+				<th scope="col">Location</th>
+				<th scope="col">Room Number</th>
+				<th scope="col">Building Type</th>
+				<th scope="col">Created At</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var realEstate in Model)
+			{
+				<tr>
+					<td>@rowNumber</td>
+					<td>@realEstate.Area</td>
+					<td>@realEstate.Location</td>
+					<td>@realEstate.RoomNumber</td>
+					<td>@realEstate.BuildingType</td>
+					<td>@realEstate.CreatedAt</td>
+
+					<td>
+						<a asp-action="update" asp-controller="RealEstate" asp-route-id="@realEstate.Id" class="btn btn-outline-primary">Update</a>
+						<a asp-action="delete" asp-controller="RealEstate" asp-route-id="@realEstate.Id" class="btn btn-outline-danger">Delete</a>
+						<a asp-action="details" asp-controller="RealEstate" asp-route-id="@realEstate.Id" class="btn btn-primary">Details</a>
+					</td>
+
+
+				</tr>
+				rowNumber += 1;
+			}
+		</tbody>
+	</table>
+</form>
