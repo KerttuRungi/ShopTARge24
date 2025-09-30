@@ -155,6 +155,29 @@ namespace Shop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+
+            var realEstate = await _realEstateServices.DetailAsync(id);
+
+            if (realEstate == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RealEstateDetailsViewModel();
+
+            vm.Id = realEstate.Id;
+            vm.Area = realEstate.Area;
+            vm.Location = realEstate.Location;
+            vm.RoomNumber = realEstate.RoomNumber;
+            vm.BuildingType = realEstate.BuildingType;
+            vm.CreatedAt = realEstate.CreatedAt;
+            vm.ModifiedAt = realEstate.ModifiedAt;
+
+            return View(vm);
+        }
     }
 }
 
