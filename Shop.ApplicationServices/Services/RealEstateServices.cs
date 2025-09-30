@@ -33,16 +33,37 @@ namespace Shop.ApplicationServices.Services
             realEstate.CreatedAt = DateTime.Now;
             realEstate.ModifiedAt = DateTime.Now;
 
-
-
-
-            await _context.RealEstate.AddAsync(realEstate);
+        await _context.RealEstate.AddAsync(realEstate);
         await _context.SaveChangesAsync();
 
         return realEstate;
 
     }
+        public async Task<RealEstate> Update(RealEstateDto dto)
+        {
+            RealEstate realEstate = new RealEstate();
+
+            realEstate.Id = dto.Id;
+            realEstate.Area = dto.Area;
+            realEstate.Location = dto.Location;
+            realEstate.RoomNumber = dto.RoomNumber;
+            realEstate.BuildingType = dto.BuildingType;
+            realEstate.CreatedAt = dto.CreatedAt;
+            realEstate.ModifiedAt = DateTime.Now;
+
+            _context.RealEstate.Update(realEstate);
+            await _context.SaveChangesAsync();
+
+            return realEstate;
+        }
+        public async Task<RealEstate> DetailAsync(Guid id)
+        {
+            var result = await _context.RealEstate
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return result;
+        }
 
 
-}
+    }
 }
