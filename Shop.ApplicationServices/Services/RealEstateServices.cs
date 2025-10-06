@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
@@ -14,14 +9,17 @@ namespace Shop.ApplicationServices.Services
     public class RealEstateServices : IRealEstateServices
     {
         private readonly ShopContext _context;
+        private readonly IFileServices _fileServices;
 
-    public RealEstateServices
+        public RealEstateServices
     (
-            ShopContext context
+            ShopContext context,
+            IFileServices fileServices
         )
     {
         _context = context;
-    }
+        _fileServices = fileServices;
+        }
     public async Task<RealEstate> Create(RealEstateDto dto)
     {
         RealEstate realEstate = new RealEstate();
@@ -33,10 +31,15 @@ namespace Shop.ApplicationServices.Services
             realEstate.CreatedAt = DateTime.Now;
             realEstate.ModifiedAt = DateTime.Now;
 
-        await _context.RealEstate.AddAsync(realEstate);
-        await _context.SaveChangesAsync();
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, realEstate);
+            }
 
-        return realEstate;
+            await _context.RealEstate.AddAsync(realEstate);
+            await _context.SaveChangesAsync();
+
+            return realEstate;
 
     }
         public async Task<RealEstate> Update(RealEstateDto dto)

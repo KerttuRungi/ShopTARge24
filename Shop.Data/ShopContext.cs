@@ -16,5 +16,6 @@ namespace Shop.Data
         public DbSet<FileToApi> FileToApis { get; set; }
 
         public DbSet<RealEstate> RealEstate { get; set; }
+        public DbSet<FileToDatabase> FileToDatabases { get; set; }
     }
 }
