@@ -14,14 +14,17 @@ namespace Shop.ApplicationServices.Services
     public class SpaceshipServices: ISpaceshipServices
     {
         private readonly ShopContext _context;
+        private readonly IFileServices _fileServices;
 
         //makeing constructor
         public SpaceshipServices
             (
-                ShopContext context
+                ShopContext context,
+                IFileServices fileServices
             )
         {
             _context = context;
+            _fileServices = fileServices;
         }
         public async Task<Spaceships> Create(SpaceshipDto dto)
         {
@@ -35,6 +38,7 @@ namespace Shop.ApplicationServices.Services
             spaceships.EnginePower = dto.EnginePower;
             spaceships.CreatedAt = DateTime.Now;
             spaceships.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceships);
 
             await _context.Spaceships.AddAsync(spaceships);
             await _context.SaveChangesAsync();
@@ -55,6 +59,7 @@ namespace Shop.ApplicationServices.Services
             spaceships.EnginePower = dto.EnginePower;
             spaceships.CreatedAt = dto.CreatedAt;
             spaceships.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceships);
 
             _context.Spaceships.Update(spaceships);
             await _context.SaveChangesAsync();
@@ -77,11 +82,22 @@ namespace Shop.ApplicationServices.Services
         {
             var result = await _context.Spaceships
                  .FirstOrDefaultAsync(x => x.Id == id);
+
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new FileToApiDto
+                {
+                    Id = y.Id,
+                    SpaceshipId = y.SpaceshipId,
+                    ExistingFilePath = y.ExistingFilePath,
+                }).ToArrayAsync();
+
+            await _fileServices.RemoveImagesFromApi(images);
             _context.Spaceships.Remove(result);
             await _context.SaveChangesAsync();
 
             return result;
-            
+
         }
     }
 }

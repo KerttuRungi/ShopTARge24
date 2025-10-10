@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Core.ServiceInterface;
 using Shop.ApplicationServices.Services;
 using Shop.Data;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
-builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
 builder.Services.AddScoped<IFileServices, FileServices>();
+builder.Services.AddScoped<IRealEstateServices, RealEstateServices>();
+builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
 
 builder.Services.AddDbContext<ShopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -26,11 +29,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
 
 app.UseRouting();
 
 app.UseAuthorization();
+
+var provider = new FileExtensionContentTypeProvider();
+app.UseStaticFiles();
+
 
 app.MapControllerRoute(
     name: "default",

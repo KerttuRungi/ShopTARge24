@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.Core.Domain
+﻿namespace Shop.Models.RealEstate
 {
-    public class RealEstate
+    public class RealEstateIndexViewModel
     {
         public Guid? Id { get; set; }
         public double? Area { get; set; }
