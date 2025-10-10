@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain; 
 using Shop.Core.Dto;
@@ -14,14 +15,19 @@ namespace Shop.ApplicationServices.Services
     public class KindergartenServices : IKindergartenServices
     {
         private readonly ShopContext _context;
+        private readonly IFileServices _fileServices;
+
 
         //makeing constructor
         public KindergartenServices
             (
-                ShopContext context
+                ShopContext context,
+                IFileServices fileServices
+
             )
         {
             _context = context;
+            _fileServices = fileServices;
         }
         public async Task<Kindergarten> Create(KindergartenDto dto)
         {
@@ -33,6 +39,11 @@ namespace Shop.ApplicationServices.Services
             kindergarten.TeacherName = dto.TeacherName;
             kindergarten.CreatedAt = DateTime.Now;
             kindergarten.UpdatedAt = DateTime.Now;
+
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabaseKindergarten(dto, kindergarten);
+            }
 
             await _context.Kindergarten.AddAsync(kindergarten);
             await _context.SaveChangesAsync();

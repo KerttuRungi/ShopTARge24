@@ -10,7 +10,7 @@ namespace Shop.Core.ServiceInterface
 {
     public interface IFileServices
     {
-        void UploadFilesToDatabase(KindergartenDto dto, Kindergarten domain);
+        void UploadFilesToDatabaseKindergarten(KindergartenDto dto, Kindergarten domain);
     }
 }
 

@@ -26,7 +26,7 @@ namespace Shop.ApplicationServices.Services
             _webHost = webHost;
             _context = context;
         }
-        public void UploadFilesToDatabase(KindergartenDto dto, Kindergarten domain)
+        public void UploadFilesToDatabaseKindergarten(KindergartenDto dto, Kindergarten domain)
         {
             if (dto.Files != null && dto.Files.Count > 0)
             {
@@ -34,7 +34,7 @@ namespace Shop.ApplicationServices.Services
                 {
                     using (var target = new MemoryStream())
                     {
-                        FileToDatabase files = new FileToDatabase()
+                        FileToDatabaseKindergarten files = new FileToDatabaseKindergarten()
                         {
                             Id = Guid.NewGuid(),
                             ImageTitle = file.FileName,

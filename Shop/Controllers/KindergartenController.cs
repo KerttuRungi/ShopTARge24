@@ -60,6 +60,15 @@ namespace Shop.Controllers
                 ChidlrenCount = vm.ChidlrenCount,
                 KindergartenName = vm.KindergartenName,
                 TeacherName = vm.TeacherName,
+                Files = vm.Files,
+                Image = vm.Image
+                    .Select(x => new FileToDatabaseKindergartenDto
+                    {
+                        Id = x.Id,
+                        ImageData = x.ImageData,
+                        ImageTitle = x.ImageTitle,
+                        KindergartenId = x.KindergartenId,
+                    }).ToArray()
             };
 
             var result = await _kindergartenServices.Create(dto);

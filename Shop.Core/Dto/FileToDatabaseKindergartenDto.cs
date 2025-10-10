@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Core.Dto
 {
-    public class FileToDatabaseDto
+    public class FileToDatabaseKindergartenDto
     {
         public Guid Id { get; set; }
         public string? ImageTitle { get; set; }

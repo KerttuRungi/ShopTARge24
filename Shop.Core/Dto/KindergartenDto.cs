@@ -16,8 +16,8 @@ namespace Shop.Core.Dto
         public string KindergartenName { get; set; }
         public string TeacherName { get; set; }
         public List<IFormFile> Files { get; set; }
-        public IEnumerable<FileToDatabaseDto> Image { get; set; }
-            = new List<FileToDatabaseDto>();
+        public IEnumerable<FileToDatabaseKindergartenDto> Image { get; set; }
+            = new List<FileToDatabaseKindergartenDto>();
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
