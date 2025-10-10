@@ -25,6 +25,7 @@ namespace Shop.ApplicationServices.Services
         {
             _webHost = webHost;
             _context = context;
+        }
         public void FilesToApi(SpaceshipDto dto, Spaceships domain)
         {
             if (dto.Files != null && dto.Files.Count > 0)
@@ -110,7 +111,6 @@ namespace Shop.ApplicationServices.Services
                         {
                             Id = Guid.NewGuid(),
                             ImageTitle = file.FileName,
-                            KindergartenId = domain.Id
                             RealEstateId = domain.Id
                         };
 
@@ -120,7 +120,11 @@ namespace Shop.ApplicationServices.Services
                         _context.FileToDatabases.Add(files);
 
                     }
-                     public void UploadFilesToDatabaseKindergarten(KindergartenDto dto, Kindergarten domain)
+                }
+            }
+        }
+
+        public void UploadFilesToDatabaseKindergarten(KindergartenDto dto, Kindergarten domain)
         {
             if (dto.Files != null && dto.Files.Count > 0)
             {
