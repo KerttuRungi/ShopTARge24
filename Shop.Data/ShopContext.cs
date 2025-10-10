@@ -14,6 +14,6 @@ namespace Shop.Data
             : base(options) { }
         public DbSet<Spaceships> Spaceships { get; set; }
         public DbSet<Kindergarten> Kindergarten { get; set; }
-        public DbSet<FileToDatabaseKindergarten> FileToDatabases { get; set; }
+        public DbSet<FileToDatabaseKindergarten> FileToDatabaseKindergartens { get; set; }
     }
 }

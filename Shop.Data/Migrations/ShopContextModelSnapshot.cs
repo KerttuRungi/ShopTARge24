@@ -22,7 +22,7 @@ namespace Shop.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Shop.Core.Domain.FileToDatabase", b =>
+            modelBuilder.Entity("Shop.Core.Domain.FileToDatabaseKindergarten", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace Shop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FileToDatabases");
+                    b.ToTable("FileToDatabaseKindergartens");
                 });
 
             modelBuilder.Entity("Shop.Core.Domain.Kindergarten", b =>

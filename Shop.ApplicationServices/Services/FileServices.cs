@@ -44,7 +44,7 @@ namespace Shop.ApplicationServices.Services
                         file.CopyTo(target);
                         files.ImageData = target.ToArray();
 
-                        _context.FileToDatabases.Add(files);
+                        _context.FileToDatabaseKindergartens.Add(files);
 
                     }
                 }
