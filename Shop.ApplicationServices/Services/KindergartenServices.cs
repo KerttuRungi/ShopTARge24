@@ -82,6 +82,8 @@ namespace Shop.ApplicationServices.Services
         {
             var result = await _context.Kindergarten
                  .FirstOrDefaultAsync(x => x.Id == id);
+
+            _fileServices.DeleteFilesFromDatabaseKindergarten(id);
             _context.Kindergarten.Remove(result);
             await _context.SaveChangesAsync();
 

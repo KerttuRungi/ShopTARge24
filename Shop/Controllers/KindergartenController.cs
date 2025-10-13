@@ -206,5 +206,22 @@ namespace Shop.Controllers
                     Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
                 }).ToArrayAsync();
         }
+        [HttpPost]
+        public IActionResult DeleteFile(Guid fileId)
+        {
+            var file = _context.FileToDatabaseKindergartens
+                .FirstOrDefault(f => f.Id == fileId);
+
+            if (file == null)
+            {
+                return NotFound();
+            }
+
+            _context.FileToDatabaseKindergartens.Remove(file);
+            _context.SaveChanges();
+
+            // Suuna tagasi sama lasteaia muutmise vaatesse
+            return RedirectToAction("Delete", new { id = file.KindergartenId });
+        }
     }
 }

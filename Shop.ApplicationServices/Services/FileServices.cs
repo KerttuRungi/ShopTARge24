@@ -149,6 +149,31 @@ namespace Shop.ApplicationServices.Services
             }
 
         }
+
+        public void DeleteFilesFromDatabaseKindergarten(Guid kindergartenId)
+        {
+            var files = _context.FileToDatabaseKindergartens
+                .Where(f => f.KindergartenId == kindergartenId)
+                .ToList();
+
+            if (files.Any())
+            {
+                _context.FileToDatabaseKindergartens.RemoveRange(files);
+                _context.SaveChanges();
+            }
+        }
+        public void DeleteSingleFileFromDatabase(Guid fileId)
+        {
+            var file = _context.FileToDatabaseKindergartens
+                .FirstOrDefault(f => f.Id == fileId);
+
+            if (file != null)
+            {
+                _context.FileToDatabaseKindergartens.Remove(file);
+                _context.SaveChanges();
+            }
+        }
+
     }
 }
 
