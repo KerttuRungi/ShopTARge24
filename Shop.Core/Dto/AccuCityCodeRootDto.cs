@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace Shop.Core.Dto
 {
 
-    public class AccuCityCodeRootDto
-    {
-        public CityCode[]? CityCode { get; set; }
-    }
+  /// public class AccuCityCodeRootDto
+   /// <summary>
+  /// public class AccuCityCodeRootDto
+  /// </summary> CityCode { get; set; }
+///    }
 
-    public class CityCode
+    public class AccuCityCodeRootDto
     {
         public int Version { get; set; }
         public string Key { get; set; } = string.Empty;
