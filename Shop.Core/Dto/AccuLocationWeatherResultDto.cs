@@ -5,21 +5,35 @@ namespace Shop.Core.Dto
     {
         public string CityName { get; set; } = string.Empty;
         public string CityCode { get; set; } = string.Empty;
-        public string LocalObservationDateTime { get; set; } = string.Empty;
-        public int EpochTime { get; set; }
-        public string WeatherText { get; set; } = string.Empty;
-        public int WeatherIcon { get; set; }
-        public bool HasPrecipitation { get; set; }
-        public string PrecipitationType { get; set; } = string.Empty;
-        public bool IsDayTime { get; set; }
+        public string EffectiveDate { get; set; } = string.Empty;
+        public Int64 EffectiveEpochDate { get; set; }
+        public int Severity { get; set; }
+        public string Text { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+        public string EndDate { get; set; } = string.Empty;
+        public Int64 EndEpochDate { get; set; }
+        public string DailyForecastsDate { get; set; } = string.Empty;
+        public int DailyForecastsEpochDate { get; set; }
 
-        public string TemperatureMetricUnit { get; set; } = string.Empty;
-        public double TemperatureMetricValue { get; set; }
-        public int TemperatureMetricUnitType { get; set; }
+        public double TempMinValue { get; set; }
+        public string TempMinUnit { get; set; } = string.Empty;
+        public int TempMinUnitType { get; set; }
 
-        public string TemperatureImperialUnit { get; set; } = string.Empty;
-        public double TemperatureImperialValue { get; set; }
-        public int TemperatureImperialUnitType { get; set; }
+        public double TempMaxValue { get; set; }
+        public string TempMaxUnit { get; set; } = string.Empty;
+        public int TempMaxUnitType { get; set; }
+
+        public int DayIcon { get; set; }
+        public string DayIconPhrase { get; set; } = string.Empty;
+        public bool DayHasPrecipitation { get; set; }
+        public string DayPrecipitationType { get; set; } = string.Empty;
+        public string DayPrecipitationIntensity { get; set; } = string.Empty;
+
+        public int NightIcon { get; set; }
+        public string NightIconPhrase { get; set; } = string.Empty;
+        public bool NightHasPrecipitation { get; set; }
+        public string NightPrecipitationType { get; set; } = string.Empty;
+        public string NightPrecipitationIntensity { get; set; } = string.Empty;
 
         public string MobileLink { get; set; } = string.Empty;
         public string Link { get; set; } = string.Empty;
