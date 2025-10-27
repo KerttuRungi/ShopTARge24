@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Newtonsoft.Json;
 
 namespace Shop.Models.ChuckNorris
 {
-    public class ChuckNorrisViewModel : Controller
+    public class ChuckNorrisViewModel
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public string JokeText { get; set; }
+        public string IconUrl { get; set; }
+        public string Url { get; set; }
     }
+    
 }

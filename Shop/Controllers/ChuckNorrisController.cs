@@ -1,12 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.ApplicationServices.Services;
+using Shop.Core.Dto;
+using Shop.Core.ServiceInterface;
+using Shop.Models.AccuWeathers;
+using Shop.Models.ChuckNorris;
 
 namespace Shop.Controllers
 {
-    public class ChuckNorrisController : Controller
+    public class chuckNorrisController : Controller
     {
-        public IActionResult Index()
+        private readonly IChuckNorrisServices _chuckNorrisServices;
+
+        public chuckNorrisController
+            (
+            IChuckNorrisServices chuckNorrisServices
+            )
         {
-            return View();
+            _chuckNorrisServices = chuckNorrisServices;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            // Call your service to get a random joke
+            var dto = await _chuckNorrisServices.GetRandomJokeAsync();
+
+            // Map DTO to ViewModel
+            var vm = new ChuckNorrisViewModel
+            {
+                JokeText = dto.Value,
+                IconUrl = dto.IconUrl,
+                Url = dto.Url
+            };
+
+            // Pass ViewModel to view
+            return View(vm);
         }
     }
 }
