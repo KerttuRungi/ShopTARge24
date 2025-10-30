@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Shop.Models.CockTails.CockTailsViewModel
+
 @{
+    ViewData["Title"] = "Cocktail Search";
 }
+
+<div class="container mt-5 text-center">
+    <h1>Cocktail Search</h1>
+
+    <!-- Search Form -->
+    <div class="mt-4">
+        <form asp-action="Index" method="post">
+            <input type="text" name="SearchTerm" class="form-control mb-2" placeholder="Enter cocktail name..." value="@Model.SearchTerm" required />
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <!-- Display Result -->
+    <div class="mt-4">
+        @if (!string.IsNullOrEmpty(Model?.Name))
+        {
+            <h2>@Model.Name</h2>
+
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="@Model.Name" style="max-width:300px; height:auto;" />
+            }
+
+            <p>
+                <strong>Category:</strong> @Model.Category<br />
+                <strong>Glass:</strong> @Model.Glass<br />
+                <strong>Type:</strong> @Model.IsAlcoholic
+            </p>
+
+            @if (Model.Ingredients?.Any() == true)
+            {
+                <p>
+                    <strong>Ingredients:</strong> @string.Join(", ", Model.Ingredients.Select((ing, i) =>
+            (string.IsNullOrWhiteSpace(Model.Measures[i]) ? "" : Model.Measures[i] + " ") + ing))
+                </p>
+            }
+
+            <p><strong>Instructions:</strong> @Model.Instructions</p>
+        }
+        else if (!string.IsNullOrWhiteSpace(Model?.SearchTerm))
+        {
+            <p class="text-muted">No cocktail found for "@Model.SearchTerm".</p>
+        }
+        else
+        {
+            <p class="text-muted">Enter a cocktail name above to see the result.</p>
+        }
+    </div>
+</div>
