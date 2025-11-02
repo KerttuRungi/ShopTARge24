@@ -1,0 +1,32 @@
+﻿@model Shop.Models.OpenWeather.OpenWeatherViewModel
+
+<div class="container mt-4">
+    <h2 class="mb-3">Weather Forecast for @Html.DisplayFor(model => model.City)</h2>
+    <hr />
+    <dl class="row">
+        <div class="mb-2">
+            <dt class="col-sm-3">Temperature:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Temperature) °C</dd>
+        </div>
+        <div class="mb-2">
+            <dt class="col-sm-3">Feels Like:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.TempFeelsLike) °C</dd>
+        </div>
+        <div class="mb-2">
+            <dt class="col-sm-3">Humidity:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Humidity) %</dd>
+        </div>
+        <div class="mb-2">
+            <dt class="col-sm-3">Pressure:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Pressure) hPa</dd>
+        </div>
+        <div class="mb-2">
+            <dt class="col-sm-3">Wind Speed:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.WindSpeed) m/s</dd>
+        </div>
+        <div class="mb-2">
+            <dt class="col-sm-3">Weather Condition:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.WeatherCondition)</dd>
+        </div>
+    </dl>
+</div>
