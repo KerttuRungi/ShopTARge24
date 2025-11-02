@@ -7,8 +7,8 @@ using Shop.Core.Dto;
 
 namespace Shop.Core.ServiceInterface
 {
-    public class IOpenWeatherServices
+    public interface IOpenWeatherServices
     {
-        
+        Task<OpenWeatherResultDto> OpenWeatherResultDto(OpenWeatherResultDto dto);
     }
 }
