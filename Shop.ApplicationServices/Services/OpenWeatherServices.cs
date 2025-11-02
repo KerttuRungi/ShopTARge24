@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// OpenWeatherServices.cs
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shop.Core.Dto;
@@ -20,33 +20,35 @@ namespace Shop.ApplicationServices.Services
 
         public async Task<OpenWeatherResultDto> OpenWeatherResultDto(OpenWeatherResultDto dto)
         {
+            if (string.IsNullOrWhiteSpace(dto.City))
+                throw new Exception("City name cannot be empty");
 
-            string apiKey = "5420c90e098df4fd16e8cd8af55b3c10"; 
+            string apiKey = "5420c90e098df4fd16e8cd8af55b3c10";
             string baseUrl = "https://api.openweathermap.org/data/2.5/weather";
-            string url = $"{baseUrl}?q={dto.CityName}&appid={apiKey}&units=metric";
+            string url = $"{baseUrl}?q={Uri.EscapeDataString(dto.City)}&appid={apiKey}&units=metric";
 
-            using (var httpClient = new HttpClient())
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            request.Headers.Accept.Clear();
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
             {
-                httpClient.BaseAddress = new Uri(baseUrl);
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(
-                    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                var response = await httpClient.GetAsync(url);
                 var jsonResponse = await response.Content.ReadAsStringAsync();
-
-               
-                var weatherData = JsonConvert.DeserializeObject<OpenWeatherRootDto>(jsonResponse);
-
-               
-                dto.CityName = weatherData.name;
-                dto.Temperature = weatherData.main.temp;
-                dto.FeelsLike = weatherData.main.feels_like;
-                dto.Humidity = weatherData.main.humidity;
-                dto.Pressure = weatherData.main.pressure;
-                dto.WindSpeed = weatherData.wind.speed;
-                dto.WeatherCondition = weatherData.weather[0].main;
+                throw new Exception($"OpenWeather API error: {response.StatusCode} - {jsonResponse}");
             }
+
+            var content = await response.Content.ReadAsStringAsync();
+            var weatherData = JsonConvert.DeserializeObject<OpenWeatherRootDto>(content);
+
+            dto.City = weatherData.name;
+            dto.Temperature = weatherData.main.temp;
+            dto.FeelsLike = weatherData.main.feels_like;
+            dto.Humidity = weatherData.main.humidity;
+            dto.Pressure = weatherData.main.pressure;
+            dto.WindSpeed = weatherData.wind.speed;
+            dto.WeatherCondition = weatherData.weather[0].main;
 
             return dto;
         }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
-using Shop.Models.AccuWeathers;
 using Shop.Models.OpenWeather;
 
 namespace Shop.Controllers
@@ -10,45 +9,46 @@ namespace Shop.Controllers
     {
         private readonly IOpenWeatherServices _openWeatherServices;
 
-        public OpenWeathersController
-            (
-            IOpenWeatherServices openWeatherServices
-            )
+        public OpenWeathersController(IOpenWeatherServices openWeatherServices)
         {
             _openWeatherServices = openWeatherServices;
         }
+
         public IActionResult Index()
         {
-            return View();
+            return View(new OpenWeatherSearchViewModel());
         }
 
         [HttpPost]
         public IActionResult SearchCity(OpenWeatherSearchViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                return RedirectToAction("CityData", "OpenWeathers", new { city = model.CityName });
-            }
+                return RedirectToAction("CityData", new { city = model.Name });
 
-            return View(model);
+            return View("Index", model);
         }
 
         [HttpGet]
-        public IActionResult CityData(string city)
+        public async Task<IActionResult> CityData(string city)
         {
-            OpenWeatherResultDto dto = new();
-            dto.CityName = city;
+            if (string.IsNullOrWhiteSpace(city))
+                return RedirectToAction("Index");
 
-            _openWeatherServices.OpenWeatherResultDto(dto);
-            OpenWeatherViewModel vm = new();
-            vm.City = dto.CityName;
-            vm.Temperature = dto.Temperature;
-            vm.Humidity = dto.Humidity;
-            vm.Pressure = dto.Pressure;
-            vm.WindSpeed = dto.WindSpeed;
-            vm.WeatherCondition = dto.WeatherCondition;
+            var dto = new OpenWeatherResultDto { City = city };
+            dto = await _openWeatherServices.OpenWeatherResultDto(dto);
 
-            return View(vm);
+            var vm = new OpenWeatherViewModel
+            {
+                City = dto.City,
+                Temperature = dto.Temperature,
+                FeelsLike = dto.FeelsLike,
+                Humidity = dto.Humidity,
+                Pressure = dto.Pressure,
+                WindSpeed = dto.WindSpeed,
+                WeatherCondition = dto.WeatherCondition
+            };
+
+            return View("CityData", vm);
         }
     }
 }

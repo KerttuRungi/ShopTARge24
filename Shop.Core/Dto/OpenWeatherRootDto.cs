@@ -23,7 +23,6 @@ namespace Shop.Core.Dto
         public int id { get; set; }
         public string name { get; set; }
         public int cod { get; set; }
-        public string CityName { get; set; }
     }
     public class Clouds
     {

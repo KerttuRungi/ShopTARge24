@@ -9,7 +9,6 @@ namespace Shop.Core.Dto
     public class OpenWeatherResultDto
     {
         public string City { get; set; }
-        public string CityName { get; set; }
         public double Temperature { get; set; }
         public double FeelsLike { get; set; }
         public int Humidity { get; set; }
