@@ -23,7 +23,7 @@ namespace Shop.ApplicationServices.Services
 
             string apiKey = "5420c90e098df4fd16e8cd8af55b3c10"; 
             string baseUrl = "https://api.openweathermap.org/data/2.5/weather";
-            string url = $"{baseUrl}?q={dto.City}&appid={apiKey}&units=metric";
+            string url = $"{baseUrl}?q={dto.CityName}&appid={apiKey}&units=metric";
 
             using (var httpClient = new HttpClient())
             {
