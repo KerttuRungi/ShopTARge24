@@ -522,7 +522,7 @@ namespace Shop.RealEstate_Test
                 Area = 150.0,
                 Location = "Mock Location",
                 RoomNumber = 4,
-                BuildingType = " Mock Villa",
+                BuildingType = "Mock Villa",
                 CreatedAt = DateTime.UtcNow,
                 ModifiedAt = DateTime.UtcNow
             };
@@ -544,7 +544,7 @@ namespace Shop.RealEstate_Test
             RealEstateDto realEstate = new()
             {
                 Area = 100.0,
-                Location = "Secret Location",
+                Location = "Mock Location",
                 RoomNumber = 7,
                 BuildingType = "Hideout",
                 CreatedAt = DateTime.Now.AddYears(1),
