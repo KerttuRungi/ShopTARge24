@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Core", "..\Shop.Core\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.RealEstate Test", "..\Shop.RealEstate Test\Shop.RealEstate Test.csproj", "{BCF0E75C-3039-4F20-AE77-2B84D650529B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Spaceship Test", "..\Spaceship Test\Shop.Spaceship Test.csproj", "{68345511-3EDA-4DAC-90C2-9D8372E62AC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{BCF0E75C-3039-4F20-AE77-2B84D650529B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCF0E75C-3039-4F20-AE77-2B84D650529B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCF0E75C-3039-4F20-AE77-2B84D650529B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68345511-3EDA-4DAC-90C2-9D8372E62AC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68345511-3EDA-4DAC-90C2-9D8372E62AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68345511-3EDA-4DAC-90C2-9D8372E62AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68345511-3EDA-4DAC-90C2-9D8372E62AC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
