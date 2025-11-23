@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.ApplicationServices", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Core", "..\Shop.Core\Shop.Core.csproj", "{BCA93BF8-CB2A-4641-A436-43CC8F17E181}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Kindergarten Test", "..\Shop.Kindergarten Test\Shop.Kindergarten Test.csproj", "{5277358B-8A67-404E-A76C-C5A1C508FB90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BCA93BF8-CB2A-4641-A436-43CC8F17E181}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCA93BF8-CB2A-4641-A436-43CC8F17E181}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCA93BF8-CB2A-4641-A436-43CC8F17E181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5277358B-8A67-404E-A76C-C5A1C508FB90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5277358B-8A67-404E-A76C-C5A1C508FB90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5277358B-8A67-404E-A76C-C5A1C508FB90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5277358B-8A67-404E-A76C-C5A1C508FB90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
