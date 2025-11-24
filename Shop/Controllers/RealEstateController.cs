@@ -7,6 +7,7 @@ using Shop.Core.ServiceInterface;
 using Shop.Models.Spaceships;
 using Shop.ApplicationServices.Services;
 using Shop.Core.Dto;
+using AspNetCoreGeneratedDocument;
 
 namespace Shop.Controllers
 {
@@ -178,8 +179,9 @@ namespace Shop.Controllers
 
             if (realEstate == null)
             {
-                return NotFound();
+                return View("ItemNotFound", id);
             }
+       
 
             RealEstateImageViewModel[] images = await FileFromDatabase(id);
 
