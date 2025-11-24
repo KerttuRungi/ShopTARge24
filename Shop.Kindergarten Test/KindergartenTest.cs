@@ -12,7 +12,7 @@ namespace Shop.Kindergarten_Test
         [Fact]
         public async Task Create_WhenValidData_ShouldCreateKindergarten()
         {
-            KindergartenDto dto = MockKindergartenDto();
+            KindergartenDto dto = MockKindergartenData();
             // Act
             var result = await Svc<IKindergartenServices>().Create(dto);
             // Assert
@@ -46,7 +46,7 @@ namespace Shop.Kindergarten_Test
             // Arrange
        
             // Create a spaceship to update
-            var CreateDto = MockKindergartenDto();
+            var CreateDto = MockKindergartenData();
             var createdkindergarten = await Svc<IKindergartenServices>().Create(CreateDto);
         
             // Prepare update data
@@ -71,7 +71,7 @@ namespace Shop.Kindergarten_Test
         public async Task ShouldGetById_Kindergarten_WhenReturnsEqual()
         {
             // Arrange
-            var dto = MockKindergartenDto();
+            var dto = MockKindergartenData();
             var created = await Svc<IKindergartenServices>().Create(dto); // create a spaceship in DB
 
             // Act
@@ -91,13 +91,32 @@ namespace Shop.Kindergarten_Test
         public async Task Delete_WhenIdMatches_ShouldDeleteKindergarten()
         {
             //arrange
-            KindergartenDto dto = MockKindergartenDto();
+            KindergartenDto dto = MockKindergartenData();
             //act
             var createKindergarten = await Svc<IKindergartenServices>().Create(dto);
             var deleteKindergarten = await Svc<IKindergartenServices>().Delete((Guid)createKindergarten.Id);
             //assert
             Assert.Equal(createKindergarten.Id, deleteKindergarten.Id);
         
+        }
+
+        [Fact]
+        public async Task Should_RemoveKindergartenFromDatabase_WhenDelete()
+        {
+            //arrange
+            KindergartenDto dto = MockKindergartenData();
+
+            //act
+            var createKindergarten = await Svc<IKindergartenServices>().Create(dto);
+            var deleteKindergarten = await Svc<IKindergartenServices>().Delete((Guid)createKindergarten.Id);
+
+            //uue teenuse kontrollimine, et objekti enam ei oleks
+            var result = await Svc<IKindergartenServices>()
+                .DetailAsync((Guid)createKindergarten.Id);
+
+            //assert
+            Assert.Equal(createKindergarten.Id, deleteKindergarten.Id);
+            Assert.Null(result);
         }
 
 
@@ -115,7 +134,7 @@ namespace Shop.Kindergarten_Test
             };
         }
 
-        private KindergartenDto MockKindergartenDto()
+        private KindergartenDto MockKindergartenData()
         {
             return new KindergartenDto
             {
