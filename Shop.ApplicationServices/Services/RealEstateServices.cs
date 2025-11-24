@@ -70,6 +70,18 @@ namespace Shop.ApplicationServices.Services
         {
             var result = await _context.RealEstate
                  .FirstOrDefaultAsync(x => x.Id == id);
+
+            var images = await _context.FileToDatabases
+                .Where(x => x.RealEstateId == id)
+                .Select(y => new FileToDatabaseDto
+                {
+                    Id = y.Id,
+                    ImageTitle = y.ImageTitle,
+                    RealEstateId = y.RealEstateId,
+                }).ToArrayAsync();
+
+            await _fileServices.RemoveImagesFromDatabase(images);
+
             _context.RealEstate.Remove(result);
             await _context.SaveChangesAsync();
 
