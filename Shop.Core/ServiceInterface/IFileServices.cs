@@ -17,5 +17,8 @@ namespace Shop.Core.ServiceInterface
         void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain);
 
         Task<FileToDatabase> RemoveImagesFromDatabase(FileToDatabaseDto[] dtos);
+
+
+        
     }
 }

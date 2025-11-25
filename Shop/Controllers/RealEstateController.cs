@@ -222,6 +222,23 @@ namespace Shop.Controllers
                     Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
                 }).ToArrayAsync();
         }
+        [HttpPost]
+        public IActionResult DeleteFile(Guid Id)
+        {
+            var file = _context.FileToDatabases
+                .FirstOrDefault(f => f.Id == Id);
+
+            if (file == null)
+            {
+                return NotFound();
+            }
+
+            _context.FileToDatabases.Remove(file);
+            _context.SaveChanges();
+
+            // Returns to the same view
+            return RedirectToAction("Delete", new { id = file.RealEstateId });
+        }
     }
 }
 

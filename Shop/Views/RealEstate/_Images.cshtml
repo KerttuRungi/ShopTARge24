@@ -3,4 +3,10 @@
 <div class="form-group row col-sm-4 offset-2">
     <div>@Model.ImageTitle</div>
     <img class="card-img-top" src="@Model.Image" asp-append-version="true" />
+	@if (ViewContext.RouteData.Values["action"]?.ToString() == "Delete")
+	{
+		<form asp-action="DeleteFile" asp-route-id="@Model.Id" method="post" style="margin-top:5px;">
+			<button type="submit" class="btn btn-outline-danger btn-sm">Delete image</button>
+		</form>
+	}
 </div>

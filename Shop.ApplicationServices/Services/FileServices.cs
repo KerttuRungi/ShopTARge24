@@ -138,6 +138,17 @@ namespace Shop.ApplicationServices.Services
 
             return null;
         }
+        public void DeleteSingleFileFromDatabase(Guid imageId)
+        {
+            var file = _context.FileToDatabases
+                .FirstOrDefault(f => f.Id == imageId);
+
+            if (file != null)
+            {
+                _context.FileToDatabases.Remove(file);
+                _context.SaveChanges();
+            }
+        }
     }
 }
 
