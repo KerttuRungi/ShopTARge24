@@ -552,7 +552,7 @@ namespace Shop.RealEstate_Test
             {
                 Area = null,
                 Location = null,
-                RoomNumber = null,
+                RoomNumber = 0,
                 BuildingType = null,
                 CreatedAt = null,
                 ModifiedAt = null
