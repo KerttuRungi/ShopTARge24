@@ -7,10 +7,10 @@ using Shop.Models.Email;
 
 namespace Shop.Controllers
 {
-    // [ApiController]
-    //[Route("api/[controller]")]
-    [Route("[controller]")]
-    public class EmailsController : Controller
+        // [ApiController]
+        //[Route("api/[controller]")]
+        [Route("[controller]")]
+        public class EmailsController : Controller
         {
             private readonly IEmailServices _emailServices;
 
@@ -42,7 +42,8 @@ namespace Shop.Controllers
 
             return RedirectToAction(nameof(Index));
             //return Ok(response);
-        }
+        
+            }
         }
 }
 
