@@ -4,6 +4,7 @@ using Shop.ApplicationServices.Services;
 using Shop.Data;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
+using Shop.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services.AddHttpClient<ICockTailsServices, CockTailsServices>();
 
 builder.Services.AddScoped<EmailServices>();
 builder.Services.AddScoped<IEmailServices, EmailServices>();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<ShopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -48,4 +51,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+//signal R part
+
+app.MapHub<ChatHub>("/chathub");
+
 app.Run();
+
