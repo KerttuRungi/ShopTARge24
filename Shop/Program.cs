@@ -5,6 +5,8 @@ using Shop.Data;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
 using Shop.Hubs;
+using Microsoft.AspNetCore.Identity;
+using Shop.Core.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,15 +28,18 @@ builder.Services.AddSignalR();
 builder.Services.AddDbContext<ShopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+    options.Password.RequiredLength = 3;
+})
+
+    .AddEntityFrameworkStores<ShopContext>()
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
+/*.AddDefaultUI()*/
+
+var app = builder.Build();
 
 app.UseHttpsRedirection();
 

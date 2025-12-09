@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
 using MimeKit;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
+using static System.Net.Mime.MediaTypeNames;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace Shop.ApplicationServices.Services
 {
@@ -42,14 +45,37 @@ namespace Shop.ApplicationServices.Services
             }
 
             email.Body = builder.ToMessageBody();
-            using var smtp = new MailKit.Net.Smtp.SmtpClient();
+            //using var smtp = new MailKit.Net.Smtp.SmtpClient();
 
             //smtp.Connect(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
             //smtp.Authenticate(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
             //smtp.Send(email);
             //smtp.Disconnect(true);
         }
+        public void SendEmailToken(EmailTokenDto dto, string token)
+        {
+            dto.Token = token;
+            var email = new MimeMessage();
 
+            _config.GetSection("EmailUserName").Value = "";
+            _config.GetSection("EmailHost").Value = "smtp.gmail.com";
+            _config.GetSection("EmailPassword").Value = "";
+
+            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUserName").Value));
+            email.To.Add(MailboxAddress.Parse(dto.To));
+            email.Subject = dto.Subject;
+            var builder = new BodyBuilder
+            {
+                HtmlBody = dto.Body,
+            };
+
+            email.Body = builder.ToMessageBody();
+            using var smtp = new SmtpClient();
+
+            smtp.Connect(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
+            smtp.Send(email);
+            smtp.Disconnect(true);
+        }
     }
 }
-
