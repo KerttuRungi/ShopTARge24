@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Domain;
 using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
+using Shop.Models;
 using Shop.Models.Accounts;
 
 namespace Shop.Controllers
@@ -90,6 +92,50 @@ namespace Shop.Controllers
             }
 
             return View();
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"The user with id of {userId} is not valid";
+                return View("NotFound");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            List<string> errordatas =
+                        [
+                        "Area", "Accounts",
+                        "Issue", "Success",
+                        "StatusMessage", "Registration Sucesss",
+                        "ActedOn", $"{user.Email}",
+                        "CreatedAccountData", $"{user.Email}\n{user.City}\n[password hidden]\n[password hidden]"
+                        ];
+
+            if (result.Succeeded)
+            {
+                errordatas =
+                        [
+                        "Area", "Accounts",
+                        "Issue", "Success",
+                        "StatusMessage", "Registration Sucesss",
+                        "ActedOn", $"{user.Email}",
+                        "CreatedAccountData", $"{user.Email}\n{user.City}\n[password hidden]\n[password hidden]"
+                        ];
+                ViewBag.ErrorDatas = errordatas;
+                return View();
+            }
+
+            ViewBag.ErrorDatas = errordatas;
+            ViewBag.ErrorTitle = "Email cannot be confirmed";
+            ViewBag.ErrorMessage = $"The users email, with userid of {userId}, cannot be confirmed.";
+            return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
