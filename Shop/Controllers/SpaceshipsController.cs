@@ -7,6 +7,7 @@ using Shop.Models.Spaceships;
 using Shop.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Shop.ApplicationServices.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shop.Controllers
 {
