@@ -8,6 +8,7 @@ using Shop.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Shop.Core.Domain;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -25,19 +26,33 @@ builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 builder.Services.AddSignalR();
 
+
+
 builder.Services.AddDbContext<ShopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    });
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
+    options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequiredLength = 3;
+
+    options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+
 })
+
 
     .AddEntityFrameworkStores<ShopContext>()
     .AddDefaultTokenProviders()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
-/*.AddDefaultUI()*/
 
 var app = builder.Build();
 
@@ -48,10 +63,12 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization(); 
 
 var provider = new FileExtensionContentTypeProvider();
 app.UseStaticFiles();
+
 
 
 app.MapControllerRoute(
