@@ -7,7 +7,7 @@
 <div class="container mt-5 text-center">
     <h1>Cocktail Search</h1>
 
-    <!-- Search Form -->
+   
     <div class="mt-4">
         <form asp-action="Index" method="post">
             <input type="text" name="SearchTerm" class="form-control mb-2" placeholder="Enter cocktail name..." value="@Model.SearchTerm" required />
@@ -15,7 +15,7 @@
         </form>
     </div>
 
-    <!-- Display Result -->
+   
     <div class="mt-4">
         @if (!string.IsNullOrEmpty(Model?.Name))
         {

@@ -54,11 +54,16 @@
         </div>
     </dl>
 
-    
-        @foreach (var images in Model.Image)
-        {
-            <partial name="_Images" model="images " />
-        }
+    <div class="row mt-4">
+        <div class="col-md-10 offset-md-1">
+            <div class="d-flex flex-wrap gap-3">
+                @foreach (var images in Model.Image)
+                {
+                    <partial name="_Images" model="images " />
+                }
+            </div>
+        </div>
+    </div>
     
 
     <hr />

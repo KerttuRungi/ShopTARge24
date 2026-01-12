@@ -29,9 +29,9 @@ namespace Shop.Controllers
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var result = _context.Spaceships
+            var result = await _context.Spaceships
                 .Select(x => new SpaceshipIndexViewModel
                 {
                     Id = x.Id,
@@ -39,8 +39,14 @@ namespace Shop.Controllers
                     Classification = x.Classification,
                     BuildDate = x.BuildDate,
                     Crew = x.Crew,
-                });
-                
+                    Images = _context.FileToApis
+                        .Where(img => img.SpaceshipId == x.Id)
+                        .Select(img => new ImageViewModel
+                        {
+                            FilePath = img.ExistingFilePath,
+                            ImageId = img.Id
+                        }).ToList()
+                }).ToListAsync(); 
 
             return View(result);
         }
